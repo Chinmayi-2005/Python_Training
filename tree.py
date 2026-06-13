@@ -1,19 +1,33 @@
-def wildfire(grid,i,j):
-    if i<0 or i>=len(grid) or j<0 or j>=len(grid[0]) or grid[i][j]!=1:
-        return
-    grid[i][j]=2
-    wildfire(grid,i+1,j) #down
-    wildfire(grid,i-1,j) #up
-    wildfire(grid,i,j+1) #right
-    wildfire(grid,i,j-1) #left
-matrix=[[1,1,1,1],
-       [1,0,0,0],
-       [0,0,1,1],
-       [1,0,0,0]]
-wildfire(matrix,0,0)
-c=0
-for i in range(len(matrix)):
-    for j in range(len(matrix[0])):
-        if matrix[i][j]==1:
-            c+=1
-print(c)
+class Nodes:
+    def __init__(self,data):
+        self.data=data
+        self.left=None
+        self.right=None
+
+class BT:
+    def __init__(self):
+        self.root=None
+    def insert(self,node,data):
+        if node is None:
+            return Nodes(data)
+        
+        if data<node.data:
+            node.left=self.insert(node.left,data)
+
+        elif data>node.data:
+            node.right=self.insert(node.right,data)
+        return node
+
+    def inorder(self,root):
+        if root is None:
+            return
+        self.inorder(root.left) 
+        print(root.data)
+        self.inorder(root.right)
+tree=BT()
+tree.root=tree.insert(tree.root,5)
+tree.root=tree.insert(tree.root,3)
+tree.root=tree.insert(tree.root,1)
+tree.root=tree.insert(tree.root,2)
+tree.inorder(tree.root)     
+        
